@@ -5,28 +5,31 @@ let products = [
         name: 'Grey Caliendi T-Shirt',
         tag: 'caliendi_tshirt',
         price: 15000,
+        image: './asset/images/caliendi_tshirt.png',
         inCart: 0
     },
     {
         name: 'Rolex Wine',
         tag: 'rolexwine',
         price: 45000,
+        image: './asset/images/rolexwine.png',
         inCart: 0
     },
     {
         name: 'Caliendi Black Pullover',
         tag: 'caliendi_black_pullover',
         price: 20000,
+        image: './asset/images/caliendi_black_pullover.jpg',
         inCart: 0
     }
 ];
+    for (let i = 0; i < carts.length; i++) {
+        carts[i].addEventListener('click', ()=>{
+            cartNumbers(products[i]);
+            totalCost(products[i]);
+        })
+    }
 
-for (let i = 0; i < carts.length; i++) {
-    carts[i].addEventListener('click', ()=>{
-        cartNumbers(products[i]);
-        totalCost(products[i]);
-    })
-}
 
 function onLoadCartNumbers() {
     let productNumbers = localStorage.getItem('cartNumbers');
@@ -53,6 +56,7 @@ function cartNumbers(product){
 function setItems(product) {
     let cartItems = localStorage.getItem('productsInCart');
     cartItems = JSON.parse(cartItems);
+    console.log("working")
 
     if (cartItems != null) {
         if (cartItems[product.tag] == undefined) {
@@ -91,7 +95,7 @@ function displayShopItems() {
         Object.values(products).map(item => {
             shopItemsContainer.innerHTML += `
             <div class="shop-item">
-            <img src="./asset/images/${item.tag}.png" alt="${item.tag}">
+            <img src="${item.image}" alt="${item.tag}">
             <h3>${item.name}</h3>
             <h3>${item.price} XOF</h3>
             <a class="add-cart itemCart">Add To Cart</a>
@@ -109,14 +113,13 @@ function displayCart() {
     let productContainer = document.querySelector(".products");
     let cartCost = localStorage.getItem("totalCost");
 
-    //console.log(cartItems)
 
     if (cartItems && productContainer ) {
         productContainer.innerHTML = '';
         Object.values(cartItems).map(item => {
             productContainer.innerHTML += `
             <div class="product">
-                <img src="./asset/images/${item.tag}.png" alt="">
+                <img src="${item.image}" alt="">
                 <span>${item.name}</span>
             </div>
                 <div class="price">${item.price} XOF</div>
